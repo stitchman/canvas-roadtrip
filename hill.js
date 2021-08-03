@@ -26,10 +26,9 @@ export class Hill {
 
     let cur = this.points[0];
     let prev = cur;
-
     let dots = [];
 
-    this.speed = (velocity / this.distance) * 40;
+    this.speed = (velocity / this.distance ** 2) * 40;
 
     if (this.speed > 0) {
       cur.x -= this.speed;

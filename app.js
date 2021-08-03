@@ -1,10 +1,11 @@
 import { Car } from "./car.js";
 import { Hill } from "./hill.js";
+import { Sun } from "./sun.js";
 
-const CAR_WIDTH = 400;
-const CAR_HEIGHT = 250;
-const WHEELSIZE = 60;
-const ACCELERATION = 0.5;
+const CAR_WIDTH = 150;
+const CAR_HEIGHT = 90;
+const WHEELSIZE = 25;
+const ACCELERATION = 0.4;
 
 class App {
   constructor() {
@@ -13,6 +14,8 @@ class App {
     this.ctx = this.canvas.getContext("2d");
 
     this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
+
+    this.sun = new Sun();
 
     this.velocity = 0;
     this.hills = [
@@ -45,15 +48,19 @@ class App {
     this.canvas.height = this.stageHeight * this.pixelRatio;
     this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
+    this.sun.resize(this.stageWidth, this.stageHeight);
+
     this.hills.forEach((hill) => {
       hill.resize(this.stageWidth, this.stageHeight);
     });
   }
 
-  animate() {
+  animate(t) {
     window.requestAnimationFrame(this.animate.bind(this));
 
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
+
+    this.sun.draw(this.ctx, t);
 
     this.velocity *= 0.92;
 
